@@ -1,0 +1,66 @@
+name: build, api test, e2e tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install newman and Angular CLI
+        run: npm i -g newman @angular/cli
+
+      - name: Install API dependencies
+        working-directory: ./api
+        run: dotnet restore
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm i
+
+      - name: Install e2e test dependencies
+        working-directory: ./tests/e2e
+        run: npm i && npx playwright install
+
+      - name: Build
+        run: dotnet build
+        working-directory: ./api
+
+      - name: Build frontend
+        run: ng build --base-href=/app
+        working-directory: ./frontend
+
+      - name: Make scripts executable
+        working-directory: ./shell_scripts
+        run: chmod +x ./wait-for-it.sh run-all-api-tests.sh
+
+      - name: Start HTTP server
+        working-directory: ./api
+        run: dotnet run &
+        env:
+          pgconn: ${{secrets.PGCONN}}
+
+      - name: Run tests
+        working-directory: ./shell_scripts
+        run: |
+          ./wait-for-it.sh -t 60 localhost:5000 &&
+          sh ./run-all-api-tests.sh &&
+          cd ../tests/e2e && npx playwright test
