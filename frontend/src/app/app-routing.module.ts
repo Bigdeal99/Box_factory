@@ -1,23 +1,10 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {BookFeed} from "./book-feed.component";
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'books',
-    pathMatch: 'full'
-  },
-  {
-    path: 'books',
-    component: BookFeed
-  }
-];
+const routes: Routes = [];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

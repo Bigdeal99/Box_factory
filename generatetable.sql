@@ -1,14 +1,17 @@
-create table library_app.books
+
+CREATE SCHEMA IF NOT EXISTS box_factory;
+create table box_factory.Boxes
 (
-    book_id       serial
-        constraint books_pk
-            primary key,
-    book_title    text,
-    publisher     text,
-    author        text,
-    cover_img_url text
+    
+    BoxId serial PRIMARY KEY,
+    BoxName VARCHAR(255),
+    BoxWeight FLOAT
 );
-
-alter table library_app.books
-    owner to pgbqmord;
-
+INSERT INTO box_factory.Boxes (BoxName, BoxWeight)
+VALUES
+    ('Box1', 10.5),
+    ('Box2', 15.2),
+    ('Box3', 12.8),
+    ('Box4', 18.7),
+    ('Box5', 9.3),
+    ('Box6', 20.0);

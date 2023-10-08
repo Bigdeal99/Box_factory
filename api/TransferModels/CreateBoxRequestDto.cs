@@ -6,9 +6,10 @@ namespace api.TransferModels;
 public class CreateBoxRequestDto
 {
     [MinLength(5)]
+    [ValueIsOneOf(new string[] {"box_1", "box_2"}, "Must be box one or tow ...")]
+    [Required]
     public string BoxName { get; set; }
     
-    [ValueIsOneOf(new string[] {"box_1", "box_2"}, "Must be one one ...")]
-
+    [Required]
     public double BoxWeight { get; set; }
 }

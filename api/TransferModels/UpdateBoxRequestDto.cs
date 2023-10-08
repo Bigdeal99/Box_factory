@@ -1,13 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using api.CustomDataAnnotations;
 
 namespace api.TransferModels;
 
 public class UpdateBoxRequestDto
 {
-
-        public int BoxId { get; set; }
-        [MinLength(4)]
+        [MinLength(5)]
+        [Required]
         public string BoxName { get; set; }
-        public double BoxWeight { get; set; } 
+    
+        [Required]
+        public double BoxWeight { get; set; }
     
 }

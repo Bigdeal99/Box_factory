@@ -43,4 +43,10 @@ public class BoxService
             throw new Exception("Could not insert box");
         }
     }
+
+    public async Task<Box> GetBoxByIdAsync(int boxId)
+    {
+        // Call the repository method to get a box by its ID asynchronously.
+        return await _boxRepository.GetBoxByIdAsync(boxId);
+    }
 }
