@@ -36,9 +36,9 @@ jobs:
         working-directory: ./frontend
         run: npm i
 
-      - name: Install e2e test dependencies
-        working-directory: ./tests/e2e
-        run: npm i && npx playwright install
+#      - name: Install e2e test dependencies
+#        working-directory: ./tests/e2e
+#        run: npm i && npx playwright install
 
       - name: Build
         run: dotnet build
