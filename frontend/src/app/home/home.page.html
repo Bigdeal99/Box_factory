@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Boxfactory
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Boxfactory</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+
+      <ion-list [inset]="true" *ngFor="let box of state.boxes">
+        <ion-item>
+          <ion-label>{{box.boxId}}</ion-label>
+          <ion-label>{{box.boxName}}</ion-label>
+          <ion-label>{{box.boxWeight}}</ion-label>
+        </ion-item>
+
+      </ion-list>
+
+  </div>
+</ion-content>
