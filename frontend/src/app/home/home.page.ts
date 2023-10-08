@@ -17,6 +17,8 @@ export class HomePage implements OnInit {
     boxWeight: '',
   };
 
+  filteredBoxes: Box[] = []; // Array to store the filtered boxes
+
   constructor(
     public http: HttpClient,
     public modalController: ModalController,
@@ -37,11 +39,41 @@ export class HomePage implements OnInit {
   }
 
   async createBox() {
-    // ... your existing createBox code ...
+    // Check if all required fields are filled
+    if (!this.newBox.boxName || !this.newBox.boxWeight) {
+      const toast = await this.toastController.create({
+        message: 'Please fill in all required fields',
+        duration: 2000,
+        position: 'middle',
+        color: 'danger',
+      });
+      toast.present();
+      return;
+    }
 
+    // Send a POST request to create a new box
     try {
-      // ... your existing createBox code ...
+      const response = await this.http
+        .post(environment.baseUrl + '/api/box', this.newBox)
+        .toPromise();
+      const createdBox: Box = response as Box;
 
+      // Add the newly created box to the state
+      this.state.boxes.push(createdBox);
+
+      // Clear the form
+      this.newBox = {
+        boxName: '',
+        boxWeight: '',
+      };
+
+      const toast = await this.toastController.create({
+        message: 'Box created successfully',
+        duration: 2000,
+        position: 'middle',
+        color: 'success',
+      });
+      toast.present();
     } catch (error) {
       console.error('Error creating box:', error);
 
@@ -85,6 +117,22 @@ export class HomePage implements OnInit {
         color: 'danger',
       });
       toast.present();
+    }
+  }
+
+  async onSearch(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+
+    if (searchTerm) {
+      // Filter boxes based on the search term
+      this.filteredBoxes = this.state.boxes.filter(
+        (box) =>
+          box.boxName.toLowerCase().includes(searchTerm) ||
+          box.boxWeight.toString().includes(searchTerm)
+      );
+    } else {
+      // If the search bar is empty, show all boxes
+      this.filteredBoxes = this.state.boxes;
     }
   }
 }

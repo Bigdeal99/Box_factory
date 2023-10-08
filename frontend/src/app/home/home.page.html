@@ -14,15 +14,9 @@
   </ion-header>
 
   <div id="container">
-    <ion-item *ngFor="let box of state.boxes">
-      <ion-label>{{ box.boxId }}</ion-label>
-      <ion-label>{{ box.boxName }}</ion-label>
-      <ion-label>{{ box.boxWeight }}</ion-label>
-      <ion-button (click)="deleteBox(box)">Delete</ion-button>
-    </ion-item>
+    <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
 
     <!-- Form for creating a box -->
-
     <ion-item>
       <ion-label position="stacked">Box Name</ion-label>
       <ion-input [(ngModel)]="newBox.boxName" placeholder="Enter Box Name"></ion-input>
@@ -33,12 +27,13 @@
     </ion-item>
     <ion-button expand="full" (click)="createBox()">Create Box</ion-button>
 
-    <!-- List of existing boxes -->
+    <!-- List of existing boxes with Delete buttons -->
     <ion-list [inset]="true">
       <ion-item *ngFor="let box of state.boxes">
         <ion-label>{{ box.boxId }}</ion-label>
         <ion-label>{{ box.boxName }}</ion-label>
         <ion-label>{{ box.boxWeight }}</ion-label>
+        <ion-button (click)="deleteBox(box)">Delete</ion-button>
       </ion-item>
     </ion-list>
   </div>
