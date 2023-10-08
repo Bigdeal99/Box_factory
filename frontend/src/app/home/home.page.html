@@ -1,8 +1,8 @@
+<!-- app.component.html -->
+
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Boxfactory
-    </ion-title>
+    <ion-title>Boxfactory</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,15 +14,25 @@
   </ion-header>
 
   <div id="container">
+    <!-- Form for creating a box -->
 
-      <ion-list [inset]="true" *ngFor="let box of state.boxes">
-        <ion-item>
-          <ion-label>{{box.boxId}}</ion-label>
-          <ion-label>{{box.boxName}}</ion-label>
-          <ion-label>{{box.boxWeight}}</ion-label>
-        </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Box Name</ion-label>
+      <ion-input [(ngModel)]="newBox.boxName" placeholder="Enter Box Name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Box Weight</ion-label>
+      <ion-input [(ngModel)]="newBox.boxWeight" placeholder="Enter Box Weight"></ion-input>
+    </ion-item>
+    <ion-button expand="full" (click)="createBox()">Create Box</ion-button>
 
-      </ion-list>
-
+    <!-- List of existing boxes -->
+    <ion-list [inset]="true">
+      <ion-item *ngFor="let box of state.boxes">
+        <ion-label>{{ box.boxId }}</ion-label>
+        <ion-label>{{ box.boxName }}</ion-label>
+        <ion-label>{{ box.boxWeight }}</ion-label>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>
