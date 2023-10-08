@@ -37,44 +37,49 @@ export class HomePage implements OnInit {
   }
 
   async createBox() {
-    // Check if all required fields are filled
-    if (!this.newBox.boxName || !this.newBox.boxWeight) {
+    // ... your existing createBox code ...
+
+    try {
+      // ... your existing createBox code ...
+
+    } catch (error) {
+      console.error('Error creating box:', error);
+
       const toast = await this.toastController.create({
-        message: 'Please fill in all required fields',
+        message: 'Failed to create box',
         duration: 2000,
         position: 'middle',
         color: 'danger',
       });
       toast.present();
-      return;
     }
+  }
 
-    // Send a POST request to create a new box
+  async deleteBox(box: Box) {
     try {
-      const response = await this.http.post(environment.baseUrl + '/api/box', this.newBox).toPromise();
-      const createdBox: Box = response as Box;
+      // Send a DELETE request to delete the box
+      await this.http
+        .delete(environment.baseUrl + '/api/box/' + box.boxId)
+        .toPromise();
 
-      // Add the newly created box to the state
-      this.state.boxes.push(createdBox);
-
-      // Clear the form
-      this.newBox = {
-        boxName: '',
-        boxWeight: '',
-      };
+      // Remove the deleted box from the state
+      const index = this.state.boxes.findIndex((b) => b.boxId === box.boxId);
+      if (index !== -1) {
+        this.state.boxes.splice(index, 1);
+      }
 
       const toast = await this.toastController.create({
-        message: 'Box created successfully',
+        message: 'Box deleted successfully',
         duration: 2000,
         position: 'middle',
         color: 'success',
       });
       toast.present();
     } catch (error) {
-      console.error('Error creating box:', error);
+      console.error('Error deleting box:', error);
 
       const toast = await this.toastController.create({
-        message: 'Failed to create box',
+        message: 'Failed to delete box',
         duration: 2000,
         position: 'middle',
         color: 'danger',

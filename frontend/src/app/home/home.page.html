@@ -14,6 +14,13 @@
   </ion-header>
 
   <div id="container">
+    <ion-item *ngFor="let box of state.boxes">
+      <ion-label>{{ box.boxId }}</ion-label>
+      <ion-label>{{ box.boxName }}</ion-label>
+      <ion-label>{{ box.boxWeight }}</ion-label>
+      <ion-button (click)="deleteBox(box)">Delete</ion-button>
+    </ion-item>
+
     <!-- Form for creating a box -->
 
     <ion-item>
