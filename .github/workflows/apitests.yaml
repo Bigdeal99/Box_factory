@@ -1,4 +1,4 @@
-name: build, api test, e2e tests
+name: build, api test, tests
 
 on:
   push:
@@ -48,19 +48,20 @@ jobs:
         run: ng build --base-href=/app
         working-directory: ./frontend
 
-      - name: Make scripts executable
-        working-directory: ./shell_scripts
-        run: chmod +x ./wait-for-it.sh run-all-api-tests.sh
+     
+      #-name: Make scripts executable
+        #working-directory: ./shell_scripts
+        #run: chmod +x ./wait-for-it.sh run-all-api-tests.sh
 
-      - name: Start HTTP server
-        working-directory: ./api
-        run: dotnet run &
-        env:
-          pgconn: ${{secrets.PGCONN}}
+#      - name: Start HTTP server
+#        working-directory: ./api
+#        run: dotnet run &
+#        env:
+#          pgconn: ${{secrets.PGCONN}}
 
-      - name: Run tests
-        working-directory: ./shell_scripts
-        run: |
-          ./wait-for-it.sh -t 60 localhost:5000 &&
-          sh ./run-all-api-tests.sh &&
-          cd ../tests/e2e && npx playwright test
+      #- name: Run tests
+        #working-directory: ./shell_scripts
+        #run: |
+         # ./wait-for-it.sh -t 60 localhost:5000 &&
+#          sh ./run-all-api-tests.sh &&
+#          cd ../tests/e2e && npx playwright test

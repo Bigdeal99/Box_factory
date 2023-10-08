@@ -17,9 +17,9 @@ public class BoxRepository
     public IEnumerable<BoxFeedQuery> GetBoxForFeed()
     {
         string sql = $@"
-SELECT box_id as {nameof(BoxFeedQuery.BoxId)},
-       box_name as {nameof(BoxFeedQuery.BoxName)},
-       box_weight as {nameof(BoxFeedQuery.BoxWeight)},
+SELECT boxid as {nameof(BoxFeedQuery.BoxId)},
+       boxname as {nameof(BoxFeedQuery.BoxName)},
+       boxweight as {nameof(BoxFeedQuery.BoxWeight)}
 FROM box_factory.boxes;
 ";
         using (var conn = _dataSource.OpenConnection())
@@ -32,11 +32,11 @@ FROM box_factory.boxes;
     public Box UpdateBox(int boxId, string boxName, double boxWeight)
     {
         var sql = $@"
-UPDATE box_factory.boxes SET box_name = @boxName,box_weight = @boxWeight
-WHERE box_id = @boxId
-RETURNING book_id as {nameof(Box.BoxId)},
-       book_title as {nameof(Box.BoxName)},
-       box_weight as {nameof(BoxFeedQuery.BoxWeight)},
+UPDATE box_factory.boxes SET boxname = @boxName,boxweight = @boxWeight
+WHERE boxid = @boxId
+RETURNING boxid as {nameof(Box.BoxId)},
+       boxname as {nameof(Box.BoxName)},
+       boxweight as {nameof(BoxFeedQuery.BoxWeight)}
 ";
 
         using (var conn = _dataSource.OpenConnection())
@@ -48,11 +48,11 @@ RETURNING book_id as {nameof(Box.BoxId)},
     public Box CreateBox(string boxName, double boxWeight)
     {
         var sql = $@"
-INSERT INTO box_factory.boxes (box_name, box_weight) 
+INSERT INTO box_factory.boxes (boxname, boxweight) 
 VALUES (@boxName, @boxWeight)
-RETURNING box_id as {nameof(Box.BoxId)},
-       box_name as {nameof(Box.BoxName)},
-       box_weight as {nameof(BoxFeedQuery.BoxWeight)},
+RETURNING boxid as {nameof(Box.BoxId)},
+       boxname as {nameof(Box.BoxName)},
+       boxweight as {nameof(BoxFeedQuery.BoxWeight)}
         
 ";
         using (var conn = _dataSource.OpenConnection())
@@ -63,7 +63,7 @@ RETURNING box_id as {nameof(Box.BoxId)},
 
     public bool DeleteBox(int boxId)
     {
-        var sql = @"DELETE FROM box_factory.boxes WHERE box_Id = @boxId;";
+        var sql = @"DELETE FROM box_factory.boxes WHERE boxId = @boxId;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.Execute(sql, new { boxId }) == 1;
@@ -72,10 +72,26 @@ RETURNING box_id as {nameof(Box.BoxId)},
 
     public bool DoesBoxtWithNameExist(string boxName)
     {
-        var sql = @"SELECT COUNT(*) FROM box_factory.boxes WHERE box_name = @boxName;";
+        var sql = @"SELECT COUNT(*) FROM box_factory.boxes WHERE boxname = @boxName;";
         using (var conn = _dataSource.OpenConnection())
         {
             return conn.ExecuteScalar<int>(sql, new { boxName }) == 1;
+        }
+    }
+
+    public async Task<Box> GetBoxByIdAsync(int boxId)
+    {
+        string sql = $@"
+SELECT boxid as {nameof(Box.BoxId)},
+       boxname as {nameof(Box.BoxName)},
+       boxweight as {nameof(Box.BoxWeight)}
+FROM box_factory.boxes
+WHERE boxid = @boxId;
+";
+
+        using (var conn = _dataSource.OpenConnection())
+        {
+            return await conn.QueryFirstOrDefaultAsync<Box>(sql, new { boxId });
         }
     }
 }

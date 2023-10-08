@@ -35,6 +35,28 @@ public class BoxController : ControllerBase
             ResponseData = _boxService.GetBoxForFeed()
         };
     }
+    [HttpGet]
+    [Route("/api/boxes/{boxId}")]
+    public async Task<ResponseDto> GetAllBoxByIdAsync([FromRoute] int boxId)
+    {
+        var box = await _boxService.GetBoxByIdAsync(boxId);
+    
+        if (box == null)
+        {
+            HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return new ResponseDto()
+            {
+                MessageToClient = "Box not found"
+            };
+        }
+
+        return new ResponseDto()
+        {
+            MessageToClient = "Successfully fetched box",
+            ResponseData = box
+        };
+    }
+
 
     [HttpPost]
     [ValidateModel]
@@ -60,10 +82,10 @@ public class BoxController : ControllerBase
         {
             MessageToClient = "Successfully updated",
             ResponseData =
-                _boxService.UpdateBox(dto.BoxId, dto.BoxName, dto.BoxWeight)
+                _boxService.UpdateBox(boxId, dto.BoxName, dto.BoxWeight)
         };
 
-    }
+    } 
 
     [HttpDelete]
     [Route("/api/box/{boxId}")]
