@@ -1,12 +1,12 @@
 {
 	"info": {
 		"_postman_id": "57840020-03d1-4696-9fdf-55fffddd63cd",
-		"name": "Library",
+		"name": "BoxFactory",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "GET /api/books",
+			"name": "GET /api/box",
 			"event": [
 				{
 					"listen": "test",
@@ -36,12 +36,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/books",
+					"raw": "{{baseUrl}}/box",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"books"
+						"box"
 					],
 					"query": [
 						{
@@ -55,7 +55,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /books",
+			"name": "POST /api/box",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -114,10 +114,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"bookTitle\": \"sadsadsadsa\",\n  \"author\": \"string\",\n  \"coverImgUrl\": \"\",\n  \"publisher\": \"publisher_1\"\n}"
+					"raw": "{\n  \"boxName\": \"string\",\n  \"BoxWeight\": \"double\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/books",
+					"raw": "http://localhost:5000/api/box",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -125,16 +125,16 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"books"
+						"box"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "POST /books Copy",
+			"name": "PUT /api/box",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Accept-Language",
@@ -191,10 +191,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"bookTitle\": \"sadsasadsadsadsaddsadsa\",\n  \"author\": \"string\",\n  \"coverImgUrl\": \"\",\n  \"publisher\": \"publisher_1\"\n}"
+					"raw": "{\n  \"boxName\": \"UpdatedBox\",\n  \"BoxWeight\": \"double\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/books",
+					"raw": "http://localhost:5000/api/box",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -202,45 +202,76 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"books"
+						"box"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "POST /books also",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.response.to.have.status(400);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "DELETE /api/box",
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,da;q=0.8"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://localhost:5000"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:5000/swagger/index.html"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+					},
 					{
 						"key": "accept",
 						"value": "text/plain"
 					},
 					{
-						"key": "Content-Type",
-						"value": "application/json"
+						"key": "sec-ch-ua",
+						"value": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Linux\""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"bookTitle\": \"string\",\n  \"author\": \"string\",\n  \"coverImgUrl\": \"string\",\n  \"publisher\": \"string\"\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/books",
+					"raw": "http://localhost:5000/api/box",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -248,7 +279,7 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"books"
+						"box"
 					]
 				}
 			},
