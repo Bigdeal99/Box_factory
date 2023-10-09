@@ -1,19 +1,12 @@
-<!-- app.component.html -->
-
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Boxfactory</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Boxfactory</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+<ion-content [fullscreen]="true" [scrollY]="true">
   <div id="container">
+    <!-- Search Bar -->
     <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
 
     <!-- Form for creating a box -->
