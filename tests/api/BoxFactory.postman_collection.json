@@ -114,7 +114,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"boxName\": \"string\",\n  \"BoxWeight\": \"double\"\n}"
+					"raw": "{\n  \"boxName\": \"Basambox\",\n  \"BoxWeight\": \"10\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/box",
@@ -191,7 +191,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"boxName\": \"UpdatedBox\",\n  \"BoxWeight\": \"double\"\n}"
+					"raw": "{\n  \"boxName\": \"UpdatedBox\",\n  \"BoxWeight\": \"10.5\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/box",
