@@ -5,7 +5,7 @@ namespace api.TransferModels;
 
 public class CreateBoxRequestDto
 {
-    [MinLength(5)]
+    [Length(4,6)]
     [Required]
     public string BoxName { get; set; }
     

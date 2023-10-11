@@ -7,5 +7,5 @@ import {Box} from "./app/models/box";
 })
 
 export class State {
-  boxes: Box  [] = [];
+  boxes: Box  [] = [] || undefined;
 }

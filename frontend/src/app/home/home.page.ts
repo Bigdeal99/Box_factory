@@ -5,6 +5,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Box, ResponseDto } from '../models/box';
 import { State } from '../../state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +17,15 @@ export class HomePage implements OnInit {
     boxName: '', // Remove boxId from the payload
     boxWeight: '',
   };
+  filteredBoxes: any[] = [];
 
-  filteredBoxes: Box[] = []; // Array to store the filtered boxes
 
   constructor(
     public http: HttpClient,
     public modalController: ModalController,
     public state: State,
-    public toastController: ToastController
+    public toastController: ToastController,
+    public router: Router,
   ) {}
 
   async fetchBoxes() {
@@ -31,7 +33,6 @@ export class HomePage implements OnInit {
       this.http.get<ResponseDto<Box[]>>(environment.baseUrl + '/api/box')
     );
     this.state.boxes = result.responseData || [];
-    console.log(this.state.boxes);
   }
 
   ngOnInit(): void {
@@ -53,14 +54,26 @@ export class HomePage implements OnInit {
 
     // Send a POST request to create a new box
     try {
-      const response = await this.http
-        .post(environment.baseUrl + '/api/box', this.newBox)
-        .toPromise();
-      const createdBox: Box = response as Box;
+      const response = await firstValueFrom(this.http.post<ResponseDto<Box>>(environment.baseUrl + '/api/box', this.newBox)).then((res) => {
+        if (res.messageToClient) {
+          console.log("past")
+          console.log(JSON.stringify(res.responseData))
 
+          this.state.boxes.push(res.responseData);
+        }
+      })
+        .catch((err) => {
+          throw err;
+        });
+
+
+
+      console.log(JSON.stringify(response))
+      console.log(this.state.boxes)
       // Add the newly created box to the state
-      this.state.boxes.push(createdBox);
 
+
+      console.log(this.state.boxes)
       // Clear the form
       this.newBox = {
         boxName: '',
@@ -120,8 +133,8 @@ export class HomePage implements OnInit {
     }
   }
 
-  async onSearch(event: any) {
-    const searchTerm = event.target.value.toLowerCase();
+  onSearch(event: any) {
+    const searchTerm = event.target.value.toLowerCase().trim();
 
     if (searchTerm) {
       // Filter boxes based on the search term
@@ -132,7 +145,12 @@ export class HomePage implements OnInit {
       );
     } else {
       // If the search bar is empty, show all boxes
-      this.filteredBoxes = this.state.boxes;
+      this.filteredBoxes = [];
     }
+  }
+
+
+  updateBox(boxId: number) {
+    this.router.navigate(["/home", boxId])
   }
 }

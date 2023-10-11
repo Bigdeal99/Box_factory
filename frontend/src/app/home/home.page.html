@@ -9,14 +9,13 @@
     <!-- Search Bar -->
     <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
 
-    <!-- Form for creating a box -->
     <ion-item>
       <ion-label position="stacked">Box Name</ion-label>
       <ion-input [(ngModel)]="newBox.boxName" placeholder="Enter Box Name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Box Weight</ion-label>
-      <ion-input [(ngModel)]="newBox.boxWeight" placeholder="Enter Box Weight"></ion-input>
+      <ion-input type="number" [(ngModel)]="newBox.boxWeight" placeholder="Enter Box Weight"></ion-input>
     </ion-item>
     <ion-button expand="full" (click)="createBox()">Create Box</ion-button>
 
@@ -26,6 +25,7 @@
         <ion-label>{{ box.boxId }}</ion-label>
         <ion-label>{{ box.boxName }}</ion-label>
         <ion-label>{{ box.boxWeight }}</ion-label>
+        <ion-button expand="full" (click)="updateBox(box.boxId)">UpdateBox</ion-button>
         <ion-button (click)="deleteBox(box)">Delete</ion-button>
       </ion-item>
     </ion-list>

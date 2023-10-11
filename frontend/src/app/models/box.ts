@@ -5,6 +5,6 @@ export interface Box {
 }
 
 export class ResponseDto<T> {
-  responseData?: T;
+  responseData?: T | undefined;
   messageToClient?: string;
 }

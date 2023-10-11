@@ -1,0 +1,14 @@
+<!-- Form for creating a box -->
+
+<ion-content [fullscreen]="true" [scrollY]="true">
+
+<ion-item>
+  <ion-label position="stacked">Box Name</ion-label>
+  <ion-input [(ngModel)]="box.boxName" placeholder="Enter Box Name"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label position="stacked">Box Weight</ion-label>
+  <ion-input [(ngModel)]="box.boxWeight" type="number"  placeholder="Enter Box Weight"></ion-input>
+</ion-item>
+<ion-button expand="full" (click)="updateBox()">Update Box</ion-button>
+</ion-content>
