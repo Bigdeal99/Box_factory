@@ -21,7 +21,7 @@
 
     <!-- List of existing boxes with Delete buttons -->
     <ion-list [inset]="true">
-      <ion-item *ngFor="let box of state.boxes">
+      <ion-item *ngFor="let box of filteredBoxes"> <!-- Use filteredBoxes here -->
         <ion-label>{{ box.boxId }}</ion-label>
         <ion-label>{{ box.boxName }}</ion-label>
         <ion-label>{{ box.boxWeight }}</ion-label>
@@ -29,5 +29,6 @@
         <ion-button (click)="deleteBox(box)">Delete</ion-button>
       </ion-item>
     </ion-list>
+
   </div>
 </ion-content>

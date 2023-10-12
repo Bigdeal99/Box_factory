@@ -135,6 +135,7 @@ export class HomePage implements OnInit {
 
   onSearch(event: any) {
     const searchTerm = event.target.value.toLowerCase().trim();
+    console.log('Search Term:', searchTerm);
 
     if (searchTerm) {
       // Filter boxes based on the search term
@@ -143,6 +144,7 @@ export class HomePage implements OnInit {
           box.boxName.toLowerCase().includes(searchTerm) ||
           box.boxWeight.toString().includes(searchTerm)
       );
+
     } else {
       // If the search bar is empty, show all boxes
       this.filteredBoxes = [];
